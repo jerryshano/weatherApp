@@ -21,76 +21,65 @@ const Flex = styled.div`
   left: 233.75px;
 `;
 
+let fetchAPI = async (locParam) => {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${locParam}&APPID=76d0bcbd868226d9268c69f256948555`
+    );
+    const data = await response.json();
+    if (data)
+      return {
+        humidity: data.main.humidity,
+        windSpeed: data.wind.speed,
+        temperature: Math.floor(data.main.temp),
+        location: data.name,
+        country: data.sys.country,
+        visibility: data.visibility,
+        clouds: data.clouds.all,
+        weather: data.weather[0].main,
+      };
+  } catch (err) {
+    console.log("oooooohh no!");
+  }
+};
+
 function App() {
   const [weather, setWeather] = useState([]);
-  const [location, setLocation] = useState("");
   const [pictures, setPictures] = useState([]);
-
-  const fetchAPI = async () => {
-    try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=76d0bcbd868226d9268c69f256948555`
-      );
-      const data = await response.json();
-      if (data)
-        setWeather({
-          humidity: data.main.humidity,
-          windSpeed: data.wind.speed,
-          temperature: Math.floor(data.main.temp),
-          location: data.name,
-          country: data.sys.country,
-          visibility: data.visibility,
-          clouds: data.clouds.all,
-        });
-      return data;
-    } catch (err) {
-      console.log("oooooohh no!");
-    }
-  };
-
-  const fetchPics = async () => {
-    try {
-      const response = await fetch(
-        "https://api.unsplash.com/search/photos?page=1&query=office&client_id=jtZrDriaHzgfjU77JCp_FSg0Xtqu65JUMeSTx49KiIQ"
-      );
-      const data = await response.json();
-      if (data) setPictures(data);
-      return pictures;
-    } catch (err) {
-      console.log("unsplash error jj");
-    }
-  };
+  const [typed, setTyped] = useState(false);
 
   useEffect(() => {
-    // fetchAPI();
+    const fetchPics = async () => {
+      try {
+        const response = await fetch(
+          `https://api.unsplash.com/search/photos/?query=${weather.weather}&page=1&client_id=jtZrDriaHzgfjU77JCp_FSg0Xtqu65JUMeSTx49KiIQ`
+        );
+        const data = await response.json();
+        if (data) {
+          setPictures(data);
+          // return data;
+        }
+      } catch (err) {
+        console.log("unsplash error jj");
+      }
+    };
     fetchPics();
-  }, [location]);
-
-  console.log(pictures, "pictures state jj", typeof pictures);
-  console.log(weather, "weather state jj", typeof weather);
-
-  // const searchLocation = (event) => {
-  //   if (event.key === "Enter") {
-  //     let kyiv = fetchAPI();
-  //     console.log(kyiv, "kyiv");
-  //   }
-  // };
+  }, [weather.weather]);
 
   return (
     <div className="">
       <Relative>
         <ParentFlex>
           <SideBar
-            data={weather}
-            // searchFunc={searchLocation}
+            setWeatherProp={setWeather}
+            weatherStateProp={weather}
             fetchWeather={fetchAPI}
-            setLoc={setLocation}
-            loc={location}
+            setterTyped={setTyped}
           />
           <Location />
         </ParentFlex>
         <Flex>
-          <CenterMain />
+          <CenterMain picturesProp={pictures} typedProp={typed} />
           <Conditions data={weather} />
         </Flex>
       </Relative>

@@ -41,13 +41,22 @@ const Input = styled.input`
   width: 150px;
 `;
 
-function SideBar({ fetchWeather, data, setLoc, loc }) {
-  const searchLocation = async (event) => {
+function SideBar({
+  fetchWeather,
+  weatherStateProp,
+  setWeatherProp,
+  setterTyped,
+}) {
+  let searchLocation = async (event) => {
     if (event.key === "Enter") {
-      let kyiv = await fetchWeather();
-      console.log(kyiv, "kyiv");
+      let location = await fetchWeather(event.target.value);
+      setterTyped(true);
+      setWeatherProp(location);
+      return location;
     }
   };
+
+  console.log(weatherStateProp, "gf");
 
   return (
     <>
@@ -64,16 +73,13 @@ function SideBar({ fetchWeather, data, setLoc, loc }) {
           <div>
             <Company>current location</Company>
             <Txt>
-              {data.country}
-              {data.location}
+              {weatherStateProp.country} - {weatherStateProp.location}
             </Txt>
           </div>
         </Flex>
         <Spacer>
           <Input
-            value={loc}
-            onKeyDown={searchLocation}
-            onChange={(event) => setLoc(event.target.value)}
+            onKeyDown={(event) => searchLocation(event)}
             placeholder="Current location"
             type="search"
           ></Input>

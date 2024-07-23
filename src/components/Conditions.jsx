@@ -14,7 +14,7 @@ const Flex = styled.div`
 `;
 
 function Conditions({ data }) {
-  // console.log(data.weather[0].main, "mainiii");
+  console.log(data, "im weather in Conditions");
 
   return (
     <>

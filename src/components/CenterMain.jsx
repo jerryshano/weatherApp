@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import bigPng from "../img/big.png";
+import big from "../img/big.png";
 import little from "../img/little.png";
 
 const Style = styled.div`
@@ -10,14 +10,14 @@ const Flex = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-function CenterMain() {
+function CenterMain({ picturesProp, typedProp }) {
   return (
     <div>
       <Style>
         <h3>Recent Place</h3>
         <div>
           <img
-            src={bigPng}
+            src={typedProp ? picturesProp.results[2].urls.small : big}
             alt=""
             style={{ width: "450px", height: "120px" }}
           />
@@ -27,16 +27,32 @@ function CenterMain() {
         <h3>Recent Place</h3>
         <Flex>
           <div>
-            <img src={little} style={{ width: "100px" }} alt="" />
+            <img
+              src={typedProp ? picturesProp.results[9].urls.small : little}
+              style={{ width: "100px", height: "130px" }}
+              alt=""
+            />
           </div>
           <div>
-            <img src={little} style={{ width: "100px" }} alt="" />
+            <img
+              src={typedProp ? picturesProp.results[9].urls.small : little}
+              style={{ width: "100px", height: "130px" }}
+              alt=""
+            />
           </div>
           <div>
-            <img src={little} style={{ width: "100px" }} alt="" />
+            <img
+              src={typedProp ? picturesProp.results[9].urls.small : little}
+              style={{ width: "100px", height: "130px" }}
+              alt=""
+            />
           </div>
           <div>
-            <img src={little} style={{ width: "100px" }} alt="" />
+            <img
+              src={typedProp ? picturesProp.results[9].urls.small : little}
+              style={{ width: "100px", height: "130px" }}
+              alt=""
+            />
           </div>
         </Flex>
       </Style>
