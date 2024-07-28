@@ -13,16 +13,18 @@ const Flex = styled.div`
   justify-content: space-between;
 `;
 
-function Conditions({ data }) {
-  console.log(data, "im weather in Conditions");
-
+function Conditions({ data, mountProp, typedProp }) {
   return (
     <>
       <Style>
         <p>👁</p>
         <Flex>
           <div>Visibility</div>
-          <div>{`${data.visibility}ft`}</div>
+          <div>
+            {typedProp === 0
+              ? `${mountProp?.visibility}ft`
+              : ` ${data?.visibility}ft`}
+          </div>
         </Flex>
         <Text>
           <p>
@@ -33,7 +35,11 @@ function Conditions({ data }) {
         <p>🌬</p>
         <Flex>
           <div>wind</div>
-          <div>{`${data.windSpeed}k/mh`}</div>
+          <div>
+            {typedProp === 0
+              ? `${mountProp.windSpeed}k/mh`
+              : `${data.windSpeed}k/mh`}
+          </div>
         </Flex>
         <Text>
           <p>
@@ -44,7 +50,9 @@ function Conditions({ data }) {
         <p>🌥</p>
         <Flex>
           <div>clouds</div>
-          <div>{`${data.clouds}%`}</div>
+          <div>
+            {typedProp === 0 ? `${mountProp.clouds}%` : `${data.clouds}%`}
+          </div>
         </Flex>
         <Text>
           <p>
@@ -55,7 +63,9 @@ function Conditions({ data }) {
         <p>💦</p>
         <Flex>
           <div>humidity</div>
-          <div>{`${data.humidity}%`}</div>
+          <div>
+            {typedProp === 0 ? `${mountProp.humidity}%` : `${data.humidity}%`}
+          </div>
         </Flex>
         <Text>
           <p>

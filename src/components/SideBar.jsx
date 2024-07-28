@@ -46,17 +46,18 @@ function SideBar({
   weatherStateProp,
   setWeatherProp,
   setterTyped,
+  typedProp,
+  mountProp,
 }) {
   let searchLocation = async (event) => {
     if (event.key === "Enter") {
       let location = await fetchWeather(event.target.value);
-      setterTyped(true);
-      setWeatherProp(location);
+      setterTyped(typedProp + 1);
       return location;
     }
   };
-
-  console.log(weatherStateProp, "gf");
+  console.log(typedProp);
+  console.log(weatherStateProp);
 
   return (
     <>
@@ -73,7 +74,8 @@ function SideBar({
           <div>
             <Company>current location</Company>
             <Txt>
-              {weatherStateProp.country} - {weatherStateProp.location}
+              {typedProp === 0 ? mountProp.country : weatherStateProp.country} -{" "}
+              {typedProp === 0 ? mountProp.location : weatherStateProp.location}
             </Txt>
           </div>
         </Flex>
