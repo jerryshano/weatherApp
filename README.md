@@ -13,7 +13,7 @@ A responsive React application that displays current weather information for any
 ## Technologies Used
 
 - **React.js**
-- **Tailwind CSS**
+- **Styled Components**
 - **JavaScript (ES6+)**
 - **Fetch API**
 
